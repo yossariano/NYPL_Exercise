@@ -51,10 +51,6 @@ def random_animal(animal):
             item_url=random_animal.item_link)
 
 if __name__ == "__main__":
-    try:
-        nypl_client = NyplDigitalCollectionClient()
-    except FileNotFoundError:
-        app.logger.error("Failed to find auth token- cannot start. See README for more info.")
-        sys.exit(1)
+    nypl_client = NyplDigitalCollectionClient()
 
     app.run()

@@ -1,4 +1,4 @@
-# NYPL Exercise
+## NYPL Digital Collections - Random Animal Picture Generator
 Coding exercise using NYPL Digital Collections API.
 Uses flask to run a simple Python webapp.
 
@@ -9,7 +9,7 @@ search for any randomized image they desire.
 
 **Note**: Requires an auth token to access the NYPL API. See instructions below.
 
-# Setup
+## Setup
 Set up a virtualenv when checking out this package.
 
 ```
@@ -27,7 +27,7 @@ AUTH_TOKEN='<insert your token here>'
 echo "$AUTH_TOKEN" > nypl_token.txt
 ```
 
-# Running the app
+## Running the app
 The following script will start up the virtualenv if not running and start your flask server:
 
 ```
@@ -42,7 +42,12 @@ http://127.0.0.1:5000/randimal/goats
 http://127.0.0.1:5000/randimal/camel
 ```
 
-# Testing
+# Parameters
+| Query Parameter | Example | Description |
+|-----------------|---------|-------------|
+|/randimal/<animal>| cat,bird,chicken | Animal of which you'd like view a random image.
+
+## Testing
 Run unit tests with pytest from within your virtualenv:
 
 ```
