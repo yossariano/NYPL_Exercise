@@ -1,10 +1,8 @@
 """
 Exception class for wrapping errors that can occur when interfacing with the NYPL backend.
 """
-class NyplBackendException(RuntimeError):
+class NyplBackendException(Exception):
 
-    def __init__(self, msg):
-        super(msg)
-
-    def __init__(self, msg, e):
-        super(msg, e)
+    def __init__(self, msg, e=None):
+        super(NyplBackendException, self).__init__(msg, e)
+        self.message = msg
