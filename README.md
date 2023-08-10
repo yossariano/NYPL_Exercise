@@ -12,8 +12,12 @@ source env/bin/activate
 
 # You should now be in your virtual env
 
-# Install flask in virtualenv
-pip3 install flask
+# Install dependencies in virtualenv
+pip3 install -r requirements.txt
+
+# Write your NYPL digital collections access token to a file
+AUTH_TOKEN='<insert your token here>'
+echo "$AUTH_TOKEN" > nypl_token.txt
 ```
 
 # Running the app
