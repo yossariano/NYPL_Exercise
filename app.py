@@ -4,7 +4,7 @@ Main module for the NYPL Random Animal Generator.
 from flask import Flask, render_template
 
 from nypldc_client import NyplDigitalCollectionClient
-from nypldc_exception import NyplBackendException
+from nypldc_exception import NyplAuthException, NyplBackendException
 from nypldc_metadata import NyplMetadata
 
 import random, sys
@@ -23,8 +23,8 @@ def index():
 def random_animal(animal):
     try:
         animal_list = nypl_client.topic_image_search(animal)
-    except NyplBackendException as e:
-        app.logger.error("Failed to get list of animal data from NYPL.")
+    except (NyplAuthException, NyplBackendException) as e:
+        app.logger.exception("Failed to get list of animal data from NYPL: {msg}".format(msg=repr(e)))
         return render_template("error.html")
 
     # Results inconsistently have image ids - filter out those that do not

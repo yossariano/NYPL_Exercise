@@ -6,3 +6,9 @@ class NyplBackendException(Exception):
     def __init__(self, msg, e=None):
         super(NyplBackendException, self).__init__(msg, e)
         self.message = msg
+
+class NyplAuthException(Exception):
+
+    def __init__(self, msg, e=None):
+        super(NyplAuthException, self).__init__(msg, e)
+        self.message = msg

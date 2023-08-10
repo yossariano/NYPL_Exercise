@@ -7,7 +7,7 @@ from requests.structures import CaseInsensitiveDict
 from unittest.mock import MagicMock
 
 from nypldc_client import NyplDigitalCollectionClient
-from nypldc_exception import NyplBackendException
+from nypldc_exception import NyplAuthException, NyplBackendException
 
 # Constants
 TMP_TOKEN_VALUE="abcd"
@@ -28,7 +28,7 @@ def test_get_token_invalid_path():
     client = NyplDigitalCollectionClient("invalid_path/invalid_token.txt")
 
     # Shoulda try to populate the token cache and fail
-    with pytest.raises(Exception):
+    with pytest.raises(NyplAuthException):
         client._get_token()
 
 def test_get_token(tmp_path):

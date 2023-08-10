@@ -45,7 +45,7 @@ http://127.0.0.1:5000/randimal/camel
 # Parameters
 | Query Parameter | Example | Description |
 |-----------------|---------|-------------|
-|/randimal/<animal>| cat,bird,chicken | Animal of which you'd like view a random image.
+|/randimal/*animal*| cat,bird,chicken | Animal of which you'd like view a random image.
 
 ## Testing
 Run unit tests with pytest from within your virtualenv:

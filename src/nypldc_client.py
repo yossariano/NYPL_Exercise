@@ -6,7 +6,7 @@ See http://api.repo.nypl.org/ for API details.
 Requires a NYPL auth token available to the server at a given path.
 '''
 import json, requests
-from nypldc_exception import NyplBackendException
+from nypldc_exception import NyplAuthException, NyplBackendException
 from nypldc_metadata import NyplMetadata
 from requests.structures import CaseInsensitiveDict
 
@@ -48,9 +48,13 @@ class NyplDigitalCollectionClient:
 
     # Fetch the cached token if it is available, or else try to read it from disk
     def _get_token(self):
-        if not self.auth_token:
+        if self.auth_token:
+            return self.auth_token
+        try:
             with open(self.auth_token_path) as t:
                 self.auth_token = t.read().strip()
+        except FileNotFoundError as e:
+            raise NyplAuthException("Missing auth token at {path}".format(path=self.auth_token_path), e)
         return self.auth_token
 
     # Use the auth token and provided URL to call the NYPL backend
@@ -66,6 +70,7 @@ class NyplDigitalCollectionClient:
             raise NyplBackendException("Failure when attempting to call NYPL backend.", e)
 
         if response.status_code != STATUS_OK:
+            # TODO: Differentiate between server and client error
             raise NyplBackendException("Got error from NYPL backend: {error}".format(error=response.reason))
 
         # Pull the content out of the response:
