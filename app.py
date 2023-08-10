@@ -24,7 +24,7 @@ def random_animal(animal):
     try:
         animal_list = nypl_client.topic_image_search(animal)
     except NyplBackendException as e:
-        app.logger.error("Failed to get list of animal data from NYPL.", e)
+        app.logger.error("Failed to get list of animal data from NYPL.")
         return render_template("error.html")
 
     if not animal_list or len(animal_list) == 0:

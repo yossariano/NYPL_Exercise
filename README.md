@@ -38,6 +38,8 @@ Once running, you can access your server and make a request for a random animal 
 
 ```
 http://127.0.0.1:5000/randimal/pig
+http://127.0.0.1:5000/randimal/goats
+http://127.0.0.1:5000/randimal/camel
 ```
 
 # Testing

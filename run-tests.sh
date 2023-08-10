@@ -3,7 +3,7 @@
 # Enter virtualenv
 source env/bin/activate
 
-PYTHONPATH=src pytest
+PYTHONPATH=src:. pytest
 
 # Exit virtualenv
 deactivate
