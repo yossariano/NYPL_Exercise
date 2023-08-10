@@ -3,9 +3,9 @@ Main module for the NYPL Random Animal Generator.
 '''
 from flask import Flask, render_template
 
-from lib.nypldc_client import NyplDigitalCollectionClient
-from lib.nypldc_exception import NyplBackendException
-from lib.nypldc_metadata import NyplMetadata
+from nypldc_client import NyplDigitalCollectionClient
+from nypldc_exception import NyplBackendException
+from nypldc_metadata import NyplMetadata
 
 import random, sys
 
@@ -22,7 +22,7 @@ def index():
 @app.route("/randimal/<animal>")
 def random_animal(animal):
     try:
-        animal_list = nypl_client.search_for_topic(animal)
+        animal_list = nypl_client.topic_image_search(animal)
     except NyplBackendException as e:
         app.logger.error("Failed to get list of animal data from NYPL.", e)
         return render_template("error.html")
@@ -38,19 +38,17 @@ def random_animal(animal):
     random_animal_index = random.randint(0, animal_list_count - 1)
     random_animal = animal_list[random_animal_index]
 
-    # Parse the metadata
-    random_animal_meta = NyplMetadata(random_animal)
-
-    if not random_animal_meta.image_id:
-        # Some of the entries don't have an image in them. If this is the case, just tell people to try again
+    if not random_animal.image_id:
+        # Some of the entries don't have an image in them.
+        # If this is the case, just tell people to try again
         return render_template("retry.html",
                 animal=animal,
-                item_url=random_animal_meta.item_link)
+                item_url=random_animal.item_link)
 
     return render_template("random_animal.html",
             animal=animal,
-            image_url=random_animal_meta.image_url,
-            item_url=random_animal_meta.item_link)
+            image_url=random_animal.image_url,
+            item_url=random_animal.item_link)
 
 if __name__ == "__main__":
     try:

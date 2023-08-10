@@ -3,7 +3,7 @@
 # Enter virtualenv
 source env/bin/activate
 
-python3 app.py
+PYTHONPATH=src python3 app.py
 
 # Exit virtualenv
 deactivate
