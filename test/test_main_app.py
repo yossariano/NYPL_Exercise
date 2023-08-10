@@ -53,12 +53,14 @@ def test_random_animal_empty(app_context):
 
 def test_random_animal_missing_image(app_context):
     app.nypl_client = MagicMock()
+
+    # Metadata without an image id will be filtered out
     app.nypl_client.topic_image_search = MagicMock(return_value=[NyplMetadata(EXAMPLE_METADATA_WITHOUT_IMAGE)])
     app.render_template = MagicMock()
 
     response = app.random_animal("invisible_goat")
 
-    app.render_template.assert_called_with("retry.html", animal="invisible_goat", item_url="itemLink2")
+    app.render_template.assert_called_with("404.html", value="invisible_goat")
 
 def test_random_animal_success(app_context):
     app.nypl_client = MagicMock()

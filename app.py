@@ -27,23 +27,20 @@ def random_animal(animal):
         app.logger.error("Failed to get list of animal data from NYPL.")
         return render_template("error.html")
 
-    if not animal_list or len(animal_list) == 0:
+    # Results inconsistently have image ids - filter out those that do not
+    # TODO: Figure out why metadata sometimes doesn't have image_ids for the same item.
+    animal_list = [animal for animal in animal_list if animal.image_id]
+    animal_list_count = len(animal_list)
+
+    if animal_list_count == 0:
         app.logger.error("Unable to find any results for {query}".format(query=animal))
         return render_template("404.html", value=animal)
 
-    animal_list_count = len(animal_list)
     app.logger.info("Found {count} results for '{token}'".format(count=animal_list_count, token=animal))
 
     # Pick a random animal from the list to display
     random_animal_index = random.randint(0, animal_list_count - 1)
     random_animal = animal_list[random_animal_index]
-
-    if not random_animal.image_id:
-        # Some of the entries don't have an image in them.
-        # If this is the case, just tell people to try again
-        return render_template("retry.html",
-                animal=animal,
-                item_url=random_animal.item_link)
 
     return render_template("random_animal.html",
             animal=animal,

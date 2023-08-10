@@ -3,7 +3,7 @@ Class which handles authentication and requests to the NYPL backend.
 
 See http://api.repo.nypl.org/ for API details.
 
-Requires a NYPL auth token available to the server at nypl_token.txt
+Requires a NYPL auth token available to the server at a given path.
 '''
 import json, requests
 from nypldc_exception import NyplBackendException
